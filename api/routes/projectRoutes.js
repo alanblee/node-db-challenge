@@ -12,4 +12,6 @@ router.route("/:projectId").delete(projectCtrl.deleteProject);
 router.route("/:projectId/tasks").post(projectCtrl.addTask);
 //GET - gets all tasks for specific project
 router.route("/:projectId/tasks").get(projectCtrl.getTasks);
+//GET - get specific project
+router.route("/:projectId/").get(projectCtrl.getSingleProject);
 module.exports = router;

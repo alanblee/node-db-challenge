@@ -34,10 +34,42 @@ const getTasks = (projectId) => {
     .where("tasks.project_id", projectId);
 };
 
+const findProjectById = async (projectId) => {
+  const foundProject = await db("projects").where({ id: projectId }).first();
+  const projectTasks = await db("tasks").where({ project_id: projectId });
+  const projectResources = await db("resources")
+    .join(
+      "project_resources",
+      "project_resources.resource_id",
+      "=",
+      "resources.id"
+    )
+    .where("project_resources.project_id", projectId);
+  return {
+    ...foundProject,
+    tasks: projectTasks.map((task) => {
+      return {
+        id: task.id,
+        instructions: task.instructions,
+        notes: task.notes,
+        completed: task.completed,
+      };
+    }),
+    resources: projectResources.map((resource) => {
+      return {
+        id: resource.resource_id,
+        name: resource.resource_name,
+        description: resource.description,
+      };
+    }),
+  };
+};
+
 module.exports = {
   findProjects,
   addProjects,
   removeProjects,
   addTask,
   getTasks,
+  findProjectById,
 };

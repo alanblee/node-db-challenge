@@ -101,3 +101,21 @@ module.exports.getTasks = async (req, res) => {
     });
   }
 };
+
+//get single project
+module.exports.getSingleProject = async (req, res) => {
+  const projectId = Number(req.params.projectId);
+  try {
+    const projectDetails = await Data.findProjectById(projectId);
+    if (projectDetails.length) {
+      res.status(200).json(projectDetails);
+    } else {
+      res.status(404).json({ message: "Cannot find project with that id" });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to get project by id",
+      err: err.message,
+    });
+  }
+};
