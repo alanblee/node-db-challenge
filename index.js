@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 
 //import routes
 const resourceRoutes = require("./api/routes/resourceRoutes");
+const projectRoutes = require("./api/routes/projectRoutes");
 
 //config body parser
 app.use(bodyParser.json());
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //config routes
 app.use("/api/resources", resourceRoutes);
+app.use("/api/projects", projectRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
