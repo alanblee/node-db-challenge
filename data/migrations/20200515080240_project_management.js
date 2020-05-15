@@ -1,8 +1,56 @@
-
-exports.up = function(knex) {
-  
+exports.up = function (knex) {
+  return knex.schema
+    .createTable("projects", (tbl) => {
+      //primary key
+      tbl.increments();
+      tbl.string("project_name").notNullable();
+      tbl.string("description");
+      tbl.boolean("completed").defaultTo(false).notNullable();
+    })
+    .createTable("resources", (tbl) => {
+      tbl.increments();
+      tbl.string("resource_name").notNullable();
+      tbl.string("description");
+    })
+    .createTable("project_resources", (tbl) => {
+      tbl.increments();
+      tbl
+        .integer("project_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("projects")
+        .onUpdate("CASCADE")
+        .onDelete("RESTRICT");
+      tbl
+        .integer("resource_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("resources")
+        .onUpdate("CASCADE")
+        .onDelete("RESTRICT");
+    })
+    .createTable("tasks", (tbl) => {
+      tbl.increments();
+      tbl.string("description").notNullable();
+      tbl.string("notes");
+      tbl.boolean("completed").defaultTo(false).notNullable();
+      tbl
+        .integer("project_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("projects")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+    });
 };
 
-exports.down = function(knex) {
-  
+exports.down = function (knex) {
+  return knex.schema
+    .dropTableIfExists("tasks")
+    .dropTableIfExists("project_resources")
+    .dropTableIfExists("resources")
+    .dropTableIfExists("projects");
 };
