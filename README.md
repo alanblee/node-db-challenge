@@ -40,11 +40,22 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+  SQL (Structured Query Language) is a database management language for relational databases
+  A relational database is a collection of data items with pre-defined relationships between them.
+
 - [ ] Why do tables need a `primary key`?
+
+      To identify a specific entry of data.
+      You need your table to be joinable on something
+      If you want your table to be clustered, you need some kind of a primary key.
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+  A foreign key.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+  A junction table that contains the foreign keys of tables that have the many to many relationship
 
 ## Minimum Viable Product
 
