@@ -107,7 +107,7 @@ module.exports.getSingleProject = async (req, res) => {
   const projectId = Number(req.params.projectId);
   try {
     const projectDetails = await Data.findProjectById(projectId);
-    if (projectDetails.length) {
+    if (projectDetails.id) {
       res.status(200).json(projectDetails);
     } else {
       res.status(404).json({ message: "Cannot find project with that id" });
