@@ -33,7 +33,7 @@ exports.up = function (knex) {
     })
     .createTable("tasks", (tbl) => {
       tbl.increments();
-      tbl.string("description").notNullable();
+      tbl.string("instructions").notNullable();
       tbl.string("notes");
       tbl.boolean("completed").defaultTo(false).notNullable();
       tbl

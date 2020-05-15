@@ -58,3 +58,46 @@ module.exports.deleteProject = async (req, res) => {
       .json({ message: "Failed to delete project", err: err.message });
   }
 };
+
+//add task
+module.exports.addTask = async (req, res) => {
+  const projectId = Number(req.params.projectId);
+  const { instructions, notes, completed } = req.body;
+  if (!instructions) {
+    res
+      .status(400)
+      .json({ message: "Please provide the instructions for this task" });
+  }
+  try {
+    const taskInfo = {
+      instructions,
+      notes,
+      completed,
+    };
+    const newTask = await Data.addTask(taskInfo, projectId);
+    if (newTask.length) {
+      res.status(201).json({ success: `Task added with id ${newTask[0]}` });
+    } else {
+      res.status(400).json({ message: "Could not add task." });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to add task",
+      err: err.message,
+    });
+  }
+};
+
+//get tasks
+module.exports.getTasks = async (req, res) => {
+  const projectId = Number(req.params.projectId);
+  try {
+    const allTasks = await Data.getTasks(projectId);
+    res.status(200).json(allTasks);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to get tasks",
+      err: err.message,
+    });
+  }
+};
