@@ -15,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/resources", resourceRoutes);
 app.use("/api/projects", projectRoutes);
 
+app.get("/", (req, res) => {
+  res.json("Sprint deployed");
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
